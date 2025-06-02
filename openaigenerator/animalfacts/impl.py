@@ -3,7 +3,7 @@ import random
 import logging
 from openai import OpenAI
 from dotenv import load_dotenv
-from constants import CuteAnimal
+from animalpipeline.openaigenerator.animalfacts.const import CuteAnimal
 
 # Configure logging
 logging.basicConfig(
@@ -22,7 +22,7 @@ def generate_cute_post():
     # Prompt for social-media-friendly text
     prompt = (
         f"Write a heartwarming, adorable fact or mini-story about a {chosen_animal}. "
-        "Keep it under 500 characters. It should be short enough for an Instagram or Telegram post."
+        "Keep it under 100 characters. It should be short enough for an Instagram or Telegram post."
     )
 
     # Compose messages
