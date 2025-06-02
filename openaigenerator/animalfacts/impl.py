@@ -11,6 +11,7 @@ logging.basicConfig(
     format='[%(asctime)s] %(levelname)s: %(message)s',
 )
 
+
 def generate_cute_post():
     # Load environment variables
     load_dotenv()
