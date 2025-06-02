@@ -1,7 +1,7 @@
 import logging
 import sys
 from apscheduler.schedulers.blocking import BlockingScheduler
-from animalpipeline.telegramfactory.animalbot.telegram_animal_bot import post_to_telegram, start_command_listener
+from telegramfactory.animalbot.telegram_animal_bot import post_to_telegram, start_command_listener
 
 logging.basicConfig(
     level=logging.INFO,

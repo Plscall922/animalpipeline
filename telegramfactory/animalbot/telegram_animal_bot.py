@@ -8,7 +8,7 @@ import asyncio
 from dotenv import load_dotenv
 from telegram import Update, Bot
 from telegram.ext import Application, CommandHandler, ContextTypes
-from animalpipeline.openaigenerator.animalfacts.impl import generate_cute_post
+from openaigenerator.animalfacts.impl import generate_cute_post
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")

@@ -3,7 +3,7 @@ import random
 import logging
 from openai import OpenAI
 from dotenv import load_dotenv
-from animalpipeline.openaigenerator.animalfacts.const import CuteAnimal
+from openaigenerator.animalfacts.const import CuteAnimal
 
 # Configure logging
 logging.basicConfig(
