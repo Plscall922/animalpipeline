@@ -43,6 +43,7 @@ def generate_cute_post():
 
         logging.info(f"Chosen animal: {chosen_animal}")
         logging.info(f"Generated post: {output}")
+        return chosen_animal, output
 
     except Exception as e:
         logging.error(f"Failed to generate content: {e}")

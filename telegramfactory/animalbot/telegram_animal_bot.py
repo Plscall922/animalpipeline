@@ -1,23 +1,43 @@
 import os
 import logging
+import asyncio
 from dotenv import load_dotenv
-from telegram import Bot
-from telegram.error import TelegramError
+from telegram import Update, Bot
+from telegram.ext import Application, CommandHandler, ContextTypes
 from animalpipeline.openaigenerator.animalfacts.impl import generate_cute_post
 
 load_dotenv()
-telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
-chat_id = os.getenv("TELEGRAM_CHAT_ID")
-telegram_bot = Bot(token=telegram_token)
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
-def post_to_telegram():
+# Async post generator
+async def post_to_telegram_async():
     result = generate_cute_post()
     if result:
         animal, text = result
         try:
-            telegram_bot.send_message(chat_id=chat_id, text=f"🐾 {animal.capitalize()} says:\n\n{text}")
+            bot = Bot(token=TOKEN)
+            await bot.send_message(
+                chat_id=CHAT_ID,
+                text=f"🐾 {animal.capitalize()} says:\n\n{text}"
+            )
             logging.info("Posted to Telegram.")
-        except TelegramError as e:
-            logging.error(f"Telegram post failed: {e}")
+        except Exception as e:
+            logging.error(f"Telegram send failed: {e}")
     else:
-        logging.warning("No content generated, skipping Telegram post.")
+        logging.warning("No content generated.")
+
+# Manual trigger via /test command
+async def handle_test(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await post_to_telegram_async()
+    await update.message.reply_text("✅ Cute animal post triggered!")
+
+# Manual run (optional utility)
+def post_to_telegram():
+    asyncio.run(post_to_telegram_async())
+
+def start_command_listener():
+    app = Application.builder().token(TOKEN).build()
+    app.add_handler(CommandHandler("test", handle_test))
+    logging.info("Telegram command listener started.")
+    app.run_polling()
