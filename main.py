@@ -2,6 +2,7 @@ import logging
 import sys
 from apscheduler.schedulers.blocking import BlockingScheduler
 from telegramfactory.animalbot.telegram_animal_bot import post_to_telegram, start_command_listener
+from pytz import timezone
 
 logging.basicConfig(
     level=logging.INFO,
@@ -10,7 +11,7 @@ logging.basicConfig(
 
 def schedule_bot():
     scheduler = BlockingScheduler()
-    scheduler.add_job(post_to_telegram, 'cron', day_of_week='mon,wed,fri', hour=12, minute=0)
+    scheduler.add_job(post_to_telegram, 'cron', hour=12, minute=0, timezone=timezone('Australia/Sydney'))
     logging.info("Scheduler started. Will post every Mon/Wed/Fri at 12:00 PM.")
     scheduler.start()
 
